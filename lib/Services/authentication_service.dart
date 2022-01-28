@@ -31,7 +31,7 @@ class AuthenticationService {
         print(" auth service login uid: ${value.user!.uid}");
 
         // return value.user!.uid;
-        DatabaseMethodss()
+        DatabaseMethods()
             .fetchUserInfoFromFirebase(uid: value.user!.uid)
             .then((value) => Get.off(() => Announcements()));
       });
@@ -88,7 +88,7 @@ class AuthenticationService {
       assert(user != null);
       assert(await user.user!.getIdToken() != null);
       if (user != null) {
-        await FirebaseApi().addUserInfoToFirebase(
+        await FirebaseApi().(
             password: password,
             name: name,
             createdAt: createdAt,
