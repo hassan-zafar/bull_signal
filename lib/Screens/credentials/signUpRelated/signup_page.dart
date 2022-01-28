@@ -1,13 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sketch_to_real/common_ui_functions.dart';
-import 'package:sketch_to_real/constants.dart';
-import 'package:sketch_to_real/screens/homepage.dart';
-import 'package:sketch_to_real/services/authentication_service.dart';
-import 'package:sketch_to_real/tools/custom_toast.dart';
-import 'package:sketch_to_real/tools/loading.dart';
-
-import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -19,7 +11,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   bool _obscureText = true;
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
@@ -32,109 +25,106 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          decoration: backgroundColorBoxDecoration(),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Form(
-                    key: _textFormKey,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Hero(
-                              tag: "logo",
-                              child: Image.asset(
-                                logo,
-                                height: 90,
-                              )),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        edittedTextField(
-                          hintText: "Enter a valid user name, min length 6",
-                          controller: _userNameController,
-                          isPass: false,
-                          lablelText: "Username",
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        edittedTextField(
-                          hintText: "Enter a valid email address",
-                          controller: _emailController,
-                          isPass: false,
-                          isEmail: true,
-                          lablelText: "Email Address",
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        edittedTextField(
-                          hintText: "Enter a valid password, min length 6",
-                          valText: 'Password Too Short',
-                          controller: _passwordController,
-                          isPass: true,
-                          lablelText: "Password",
-                          obscureText: _obscureText,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        edittedTextField(
-                          hintText: "Enter same password as above",
-                          valText: 'Password Too Short',
-                          controller: _confirmPasswordController,
-                          isPass: true,
-                          lablelText: "Confirm Password",
-                          obscureText: _obscureText,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        edittedTextField(
-                          hintText: "Enter a valid phone number",
-                          controller: _phoneNoController,
-                          isPass: false,
-                          valText: 'Phone number Too Short',
-                          lablelText: "Phone NUmber",
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Form(
+                  key: _textFormKey,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Hero(
+                            tag: "logo",
+                            child: Image.asset(
+                              logo,
+                              height: 90,
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      edittedTextField(
+                        hintText: "Enter a valid user name, min length 6",
+                        controller: _userNameController,
+                        isPass: false,
+                        lablelText: "Username",
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      edittedTextField(
+                        hintText: "Enter a valid email address",
+                        controller: _emailController,
+                        isPass: false,
+                        isEmail: true,
+                        lablelText: "Email Address",
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      edittedTextField(
+                        hintText: "Enter a valid password, min length 6",
+                        valText: 'Password Too Short',
+                        controller: _passwordController,
+                        isPass: true,
+                        lablelText: "Password",
+                        obscureText: _obscureText,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      edittedTextField(
+                        hintText: "Enter same password as above",
+                        valText: 'Password Too Short',
+                        controller: _confirmPasswordController,
+                        isPass: true,
+                        lablelText: "Confirm Password",
+                        obscureText: _obscureText,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      edittedTextField(
+                        hintText: "Enter a valid phone number",
+                        controller: _phoneNoController,
+                        isPass: false,
+                        valText: 'Phone number Too Short',
+                        lablelText: "Phone NUmber",
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
 
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () => _handleSignUp(context),
-                            child: buildSignUpLoginButton(
-                                context: context,
-                                btnText: "SignUp",
-                                assetImage: signUp,
-                                color: containerColor,
-                                hasIcon: true),
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () => _handleSignUp(context),
+                          child: buildSignUpLoginButton(
+                              context: context,
+                              btnText: "SignUp",
+                              assetImage: signUp,
+                              color: containerColor,
+                              hasIcon: true),
                         ),
+                      ),
 
-                        const SizedBox(
-                          height: 20,
-                        ),
+                      const SizedBox(
+                        height: 20,
+                      ),
 // Move to Sign Up Page
-                      ],
-                    ),
+                    ],
                   ),
                 ),
               ),
-              _isLoading ? LoadingIndicator() : Container(),
-            ],
-          ),
+            ),
+            _isLoading ? LoadingIndicator() : Container(),
+          ],
         ),
         bottomSheet: buildSignUpLoginText(
             context: context,
@@ -159,14 +149,14 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   GlassContainer edittedTextField({
-    String ?lablelText,
+    String? lablelText,
     String? hintText,
     bool? isEmail = false,
-    bool ?obscureText = true,
+    bool? obscureText = true,
     String? valText,
     int valLength = 6,
     TextEditingController? controller,
-    bool ?isPass,
+    bool? isPass,
   }) {
     return GlassContainer(
       opacity: 0.5,

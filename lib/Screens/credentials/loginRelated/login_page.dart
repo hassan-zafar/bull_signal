@@ -1,3 +1,5 @@
+import 'package:bull_signal/Utils/commonWidgets.dart';
+import 'package:bull_signal/Utils/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'forget_password_page.dart';
@@ -21,160 +23,148 @@ class _LoginPageState extends State<LoginPage> {
     print(widget.currentUserString);
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          decoration: backgroundColorBoxDecoration(),
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Form(
-                    key: _textFormKey,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 10,
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Form(
+                  key: _textFormKey,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Hero(
+                            tag: "logo",
+                            child: Image.asset(
+                              logo,
+                              height: 90,
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                     Padding(
+                       padding: const EdgeInsets.only(left: 12.0),
+                       child: TextFormField(
+                         controller: _emailController,
+                         keyboardType: TextInputType.text,
+                         validator: (val) {
+                           if (val == null) {
+                             return null;
+                           }
+                           if (val.isEmpty) {
+                             return "Field is Empty";
+                           } else if (!val.contains("@") ||
+                               val.trim().length < 4) {
+                             return "Invalid E-mail!";
+                           } else {
+                             return null;
+                           }
+                         },
+                         // onSaved: (val) => phoneNo = val,
+                         autofocus: true,
+                         decoration: const InputDecoration(
+                           border: InputBorder.none,
+                           labelText: "E-mail",
+                           labelStyle: TextStyle(fontSize: 15.0),
+                           hintText: "Please enter your valid E-mail",
+                         ),
+                       ),
+                     ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 12.0,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Hero(
-                              tag: "logo",
-                              child: Image.asset(
-                                'logo',
-                                height: 90,
-                              )),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        GlassContainer(
-                          opacity: 0.5,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: TextFormField(
-                              controller: _emailController,
-                              keyboardType: TextInputType.text,
-                              validator: (val) {
-                                if (val == null) {
-                                  return null;
-                                }
-                                if (val.isEmpty) {
-                                  return "Field is Empty";
-                                } else if (!val.contains("@") ||
-                                    val.trim().length < 4) {
-                                  return "Invalid E-mail!";
-                                } else {
-                                  return null;
-                                }
+                        child: TextFormField(
+                          obscureText: _obscureText,
+                          validator: (val) {
+                            if (val == null) {
+                              return null;
+                            }
+                            if (val.length < 6) {
+                              return 'Password Too Short';
+                            } else {
+                              return null;
+                            }
+                          },
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
                               },
-                              // onSaved: (val) => phoneNo = val,
-                              autofocus: true,
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                labelText: "E-mail",
-                                labelStyle: TextStyle(fontSize: 15.0),
-                                hintText: "Please enter your valid E-mail",
+                              child: Icon(_obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                            ),
+                            border: InputBorder.none,
+                            // filled: true,
+                            //  fillColor: Colors.white,
+                            labelText: "Password",
+                            hintText: "Enter a valid password, min length 6",
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 220, top: 8, bottom: 8, right: 12),
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgetPasswordPage())),
+                          child:  const Padding(
+                            padding:  EdgeInsets.all(8.0),
+                            child:  Hero(
+                              tag: "passFor",
+                              child: Text(
+                                "Forgot Password?",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Colors.black),
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () => _handleLogin(),
+                          child: buildSignUpLoginButton(
+                              context: context,
+                              btnText: "Log In",
+                              assetImage: loginIcon,
+                              color: containerColor,
+                              hasIcon: true),
                         ),
-                        GlassContainer(
-                          opacity: 0.5,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 12.0,
-                            ),
-                            child: TextFormField(
-                              obscureText: _obscureText,
-                              validator: (val) {
-                                if (val == null) {
-                                  return null;
-                                }
-                                if (val.length < 6) {
-                                  return 'Password Too Short';
-                                } else {
-                                  return null;
-                                }
-                              },
-                              controller: _passwordController,
-                              decoration: InputDecoration(
-                                suffixIcon: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _obscureText = !_obscureText;
-                                    });
-                                  },
-                                  child: Icon(_obscureText
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                ),
-                                border: InputBorder.none,
-                                // filled: true,
-                                //  fillColor: Colors.white,
-                                labelText: "Password",
-                                hintText:
-                                    "Enter a valid password, min length 6",
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 220, top: 8, bottom: 8, right: 12),
-                          child: GestureDetector(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ForgetPasswordPage())),
-                            child: const GlassContainer(
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Hero(
-                                  tag: "passFor",
-                                  child: Text(
-                                    "Forgot Password?",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                        color: Colors.black),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () => _handleLogin(),
-                            child: buildSignUpLoginButton(
-                                context: context,
-                                btnText: "Log In",
-                                assetImage: loginIcon,
-                                color: containerColor,
-                                hasIcon: true),
-                          ),
-                        ),
+                      ),
 
-                        const SizedBox(
-                          height: 20,
-                        ),
+                      const SizedBox(
+                        height: 20,
+                      ),
 // Move to Sign Up Page
-                      ],
-                    ),
+                    ],
                   ),
                 ),
               ),
-              _isLoading ? LoadingIndicator() : Container(),
-            ],
-          ),
+            ),
+            _isLoading ? LoadingIndicator() : Container(),
+          ],
         ),
         bottomSheet: buildSignUpLoginText(
             context: context,
@@ -195,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
         _isLoading = true;
       });
 
-      final String ?email = _emailController.text;
+      final String? email = _emailController.text;
       final String? password = _passwordController.text;
       String? userId = await AuthenticationService()
           .logIn(email: email!, password: password!)
