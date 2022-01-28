@@ -9,6 +9,8 @@ final chatRoomRef = FirebaseFirestore.instance.collection('chatRoom');
 final chatListRef = FirebaseFirestore.instance.collection('chatLists');
 
 AppUserModel? currentUser;
+String? uid;
+
 TextStyle titleTextStyle({double fontSize = 25, Color color = Colors.black}) {
   return TextStyle(
       fontSize: fontSize,

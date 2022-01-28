@@ -1,8 +1,8 @@
 import 'package:bull_signal/Database/database.dart';
+import 'package:bull_signal/Screens/credentials/loginRelated/login_page.dart';
+import 'package:bull_signal/announcements/announcements.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-
 
 class UserState extends StatelessWidget {
   @override
@@ -24,14 +24,14 @@ class UserState extends StatelessWidget {
                   .then((value) {
                 print('The user is already logged in');
               });
-              return HomePage();
+              return Announcements();
 
               // MainScreens();
             } else {
               print('The user didn\'t login yet');
               return
                   // IntroductionAuthScreen();
-                  LandingPage();
+                  LoginPage();
             }
           } else if (userSnapshot.hasError) {
             return Center(
