@@ -6,11 +6,12 @@ import 'package:bull_signal/tools/custom_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-class DatabaseMethods {  addUserInfoToFirebase({
+class DatabaseMethods {
+  addUserInfoToFirebase({
     required final String password,
     required final String? name,
     required final String? joinedAt,
-    required final int? phoneNo,
+    required final String? phoneNo,
     required final String? imageUrl,
     required final Timestamp? createdAt,
     required final String email,
@@ -29,7 +30,9 @@ class DatabaseMethods {  addUserInfoToFirebase({
       'joinedAt': joinedAt,
       'imageUrl': imageUrl,
       'androidNotificationToken': "",
-    }).then((value) {
+    }).then((value) async {
+      final DocumentSnapshot _user = await userRef.doc(uid).get();
+      currentUser = AppUserModel.fromDocument(_user);
       // currentUser = userModel;
     }).catchError(
       (Object obj) {
@@ -37,6 +40,7 @@ class DatabaseMethods {  addUserInfoToFirebase({
       },
     );
   }
+
   Future fetchUserInfoFromFirebase({
     required String uid,
   }) async {

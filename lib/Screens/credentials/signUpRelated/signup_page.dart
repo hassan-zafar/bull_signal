@@ -1,3 +1,10 @@
+import 'package:bull_signal/Services/authentication_service.dart';
+import 'package:bull_signal/Utils/commonWidgets.dart';
+import 'package:bull_signal/Utils/consts.dart';
+import 'package:bull_signal/Utils/palette.dart';
+import 'package:bull_signal/announcements/announcements.dart';
+import 'package:bull_signal/tools/custom_toast.dart';
+import 'package:bull_signal/tools/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -123,7 +130,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
             ),
-            _isLoading ? LoadingIndicator() : Container(),
+            _isLoading ? const LoadingIndicator() : Container(),
           ],
         ),
         bottomSheet: buildSignUpLoginText(
@@ -148,7 +155,7 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  GlassContainer edittedTextField({
+  Container edittedTextField({
     String? lablelText,
     String? hintText,
     bool? isEmail = false,
@@ -158,8 +165,7 @@ class _SignUpPageState extends State<SignUpPage> {
     TextEditingController? controller,
     bool? isPass,
   }) {
-    return GlassContainer(
-      opacity: 0.5,
+    return Container(
       child: Padding(
         padding: const EdgeInsets.only(
           left: 12.0,
@@ -215,13 +221,17 @@ class _SignUpPageState extends State<SignUpPage> {
       });
       // UserModel userModel = UserModel();
 
-      User? _user = await AuthenticationService()
+      UserCredential? _user = await AuthenticationService()
           .signUp(
-              timestamp: DateTime.now().toString(),
-              email: _emailController.text,
-              isAdmin: false,
-              password: _passwordController.text,
-              userName: _userNameController.text)
+        email: _emailController.text,
+        isAdmin: false,
+        password: _passwordController.text,
+        name: _userNameController.text,
+        createdAt: null,
+        joinedAt: DateTime.now().toString(),
+        imageUrl: '',
+        phoneNo: '',
+      )
           .onError((error, stackTrace) {
         setState(() {
           _isLoading = false;
@@ -236,7 +246,7 @@ class _SignUpPageState extends State<SignUpPage> {
       if (_user != null) {
         successToast(message: 'Successfully Registered');
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: ((context) => HomePage())));
+            MaterialPageRoute(builder: ((context) => Announcements())));
       }
     }
   }

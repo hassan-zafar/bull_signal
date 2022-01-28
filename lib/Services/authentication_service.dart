@@ -75,7 +75,7 @@ class AuthenticationService {
     required final String? imageUrl,
     required final Timestamp? createdAt,
     required final String email,
-    required final int phoneNo,
+    required final String phoneNo,
     final bool? isAdmin,
   }) async {
     print("1st stop");
