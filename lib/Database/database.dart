@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bull_signal/Models/users.dart';
 import 'package:bull_signal/Utils/consts.dart';
+import 'package:bull_signal/tools/custom_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
