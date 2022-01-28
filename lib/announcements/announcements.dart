@@ -108,6 +108,7 @@ class _AnnouncementsState extends State<Announcements> {
   }
 
   deleteNotification(BuildContext parentContext, String id) {
+
     return showDialog(
         context: parentContext,
         builder: (context) {
@@ -115,13 +116,7 @@ class _AnnouncementsState extends State<Announcements> {
             children: <Widget>[
               SimpleDialogOption(
                 onPressed: () {
-                  allUsersList.forEach((e) {
-                    announcementsRef
-                        .doc(e.id)
-                        .collection("userAnnouncements")
-                        .doc(id)
-                        .delete();
-                  });
+   
                   getAnnouncements();
                   Navigator.pop(context);
                 },

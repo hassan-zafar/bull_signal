@@ -1,12 +1,14 @@
 import 'dart:io';
+import 'package:bull_signal/Database/database.dart';
+import 'package:bull_signal/Services/firebase_api.dart';
+import 'package:bull_signal/tools/custom_toast.dart';
+import 'package:bull_signal/tools/loading.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:image/image.dart' as Im;
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
-
-
 
 class AddAnnouncements extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class AddAnnouncements extends StatefulWidget {
 
 class _AddAnnouncementsState extends State<AddAnnouncements> {
   final TextEditingController _titleTextController = TextEditingController();
-  String postId = Uuid().v4();
+  String postId = const Uuid().v4();
   bool isUploading = false;
   final TextEditingController _descriptionTextController =
       TextEditingController();
@@ -31,105 +33,96 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        decoration: backgroundColorBoxDecorationLogo(),
-        child: Stack(
-          children: [
-            Scaffold(
-              appBar: AppBar(
-                title: Text("Add Announcements"),
-                backgroundColor: Colors.transparent,
-                centerTitle: true,
-                elevation: 0,
-                actions: [
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    // ignore: deprecated_member_use
-                    child: RaisedButton.icon(
-                      onPressed: () {
-                        buildMediaDialog(context);
-                      },
-                      icon: Icon(
-                        Icons.add,
-                        size: 20.0,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                      label: Text(
-                        'Add Media',
-                        style: TextStyle(fontSize: 10.0),
-                      ),
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: AppBar(
+              title: const Text("Add Announcements"),
+              backgroundColor: Colors.transparent,
+              centerTitle: true,
+              elevation: 0,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  // ignore: deprecated_member_use
+                  child: RaisedButton.icon(
+                    onPressed: () {
+                      buildMediaDialog(context);
+                    },
+                    icon: const Icon(
+                      Icons.add,
+                      size: 20.0,
                     ),
-                  )
-                ],
-              ),
-              body: SingleChildScrollView(
-                controller: _scrollController,
-                child: Form(
-                  key: _textFormkey,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GlassContainer(
-                            child: TextFormField(
-                              controller: _titleTextController,
-                              validator: (val) => val!.trim().length < 3
-                                  ? 'Announcement Title Too Short'
-                                  : null,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Enter title of announcement",
-                                  labelText: "Title"),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 25.0,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GlassContainer(
-                            child: TextFormField(
-                              controller: _descriptionTextController,
-                              validator: (val) => val!.trim().length < 3
-                                  ? 'Announcement Description Title Too Short'
-                                  : null,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Enter Description of announcement",
-                                  labelText: "Description"),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 25.0,
-                        ),
-                        GestureDetector(
-                          onTap: () => handleSubmit(),
-                          child: GlassContainer(
-                            child: Padding(
-                              padding: const EdgeInsets.all(24.0),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.send_outlined),
-                                  Text("Send Announcement"),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                    label: const Text(
+                      'Add Media',
+                      style: TextStyle(fontSize: 10.0),
                     ),
+                  ),
+                )
+              ],
+            ),
+            body: SingleChildScrollView(
+              controller: _scrollController,
+              child: Form(
+                key: _textFormkey,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _titleTextController,
+                          validator: (val) => val!.trim().length < 3
+                              ? 'Announcement Title Too Short'
+                              : null,
+                          decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Enter title of announcement",
+                              labelText: "Title"),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 25.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _descriptionTextController,
+                          validator: (val) => val!.trim().length < 3
+                              ? 'Announcement Description Title Too Short'
+                              : null,
+                          decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Enter Description of announcement",
+                              labelText: "Description"),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 25.0,
+                      ),
+                      GestureDetector(
+                        onTap: () => handleSubmit(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.send_outlined),
+                              Text("Send Announcement"),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
             ),
-            _isLoading ? LoadingIndicator() : Container()
-          ],
-        ),
+          ),
+          _isLoading ? const LoadingIndicator() : Container()
+        ],
       ),
     );
   }
@@ -181,7 +174,7 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
     final String? eachUserToken,
     final String? eachUserId,
   }) async {
-    return DatabaseMethods().addAnnouncements(
+    return FirebaseApi().addAnnouncements(
         description: description!,
         imageUrl: imageUrl!,
         eachUserToken: eachUserToken!,
@@ -197,40 +190,40 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
         isUploading = true;
       });
       _scrollController.animateTo(0.0,
-          duration: Duration(milliseconds: 600), curve: Curves.easeOut);
+          duration: const Duration(milliseconds: 600), curve: Curves.easeOut);
       // ignore: unnecessary_statements
       file != null ? await compressImage() : null;
       String imageUrl = file != null
           ? await uploadImage(file).catchError((onError) {
               isUploading = false;
-              BotToast.showText(text: "Couldn't connect to servers!!");
+              errorToast(message: "Couldn't connect to servers!!");
             })
           : "";
-      allUsersList.forEach((e) async {
-        await createPostInFirestore(
-            announcementTitle: _titleTextController.text,
-            imageUrl: imageUrl,
-            eachUserId: e.id,
-            eachUserToken: e.androidNotificationToken,
-            description: _descriptionTextController.text);
-        sendAndRetrieveMessage(
-            token: e.androidNotificationToken!,
-            message: _descriptionTextController.text,
-            context: context,
-            imageUrl: imageUrl,
-            title: _titleTextController.text);
-      });
+      // allUsersList.forEach((e) async {
+      //   await createPostInFirestore(
+      //       announcementTitle: _titleTextController.text,
+      //       imageUrl: imageUrl,
+      //       eachUserId: e.id,
+      //       eachUserToken: e.androidNotificationToken,
+      //       description: _descriptionTextController.text);
+      //   sendAndRetrieveMessage(
+      //       token: e.androidNotificationToken!,
+      //       message: _descriptionTextController.text,
+      //       context: context,
+      //       imageUrl: imageUrl,
+      //       title: _titleTextController.text);
+      // });
 
       _descriptionTextController.clear();
       _titleTextController.clear();
       setState(() {
         isUploading = false;
-        postId = Uuid().v4();
+        postId = const Uuid().v4();
       });
 
       Navigator.pop(context);
     }
-    BotToast.showText(text: "Announcement Added");
+    successToast(message: "Announcement Added");
   }
 
   buildMediaDialog(BuildContext parentContext) {
@@ -250,11 +243,11 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.image),
-                        SizedBox(
+                        const Icon(Icons.image),
+                        const SizedBox(
                           width: 5,
                         ),
-                        Text(
+                        const Text(
                           'Upload Image',
                         ),
                       ],
@@ -269,11 +262,11 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
                   child: Container(
                       child: Row(
                     children: [
-                      Icon(Icons.exit_to_app),
-                      SizedBox(
+                      const Icon(Icons.exit_to_app),
+                      const SizedBox(
                         width: 5,
                       ),
-                      Text('Cancel'),
+                      const Text('Cancel'),
                     ],
                   )),
                 ),
