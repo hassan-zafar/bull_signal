@@ -1,12 +1,8 @@
+import 'package:bull_signal/Services/firebase_api.dart';
+import 'package:bull_signal/Services/global_method.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:meditation_alive/auth/landing_page.dart';
-import 'package:meditation_alive/consts/collections.dart';
-import 'package:meditation_alive/database/database.dart';
-import 'package:meditation_alive/models/users.dart';
-
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -41,7 +37,7 @@ class AuthenticationService {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
-        errorToast(message: 'No user found for that email.');
+        GlobalMethods().printError(info: 'No user found for that email.');
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
       }
@@ -68,63 +64,6 @@ class AuthenticationService {
     }
   }
 
-  Future<bool> signinWithGoogle() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    final GoogleSignInAccount? googleAccount = await googleSignIn.signIn();
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-
-    if (googleAccount != null) {
-      print('here');
-      final GoogleSignInAuthentication googleAuth =
-          await googleAccount.authentication;
-
-      if (googleAuth.accessToken != null && googleAuth.idToken != null) {
-        try {
-          String date = DateTime.now().toString();
-          DateTime dateparse = DateTime.parse(date);
-          String formattedDate =
-              '${dateparse.day}-${dateparse.month}-${dateparse.year}';
-          final UserCredential authResult = await _auth.signInWithCredential(
-              GoogleAuthProvider.credential(
-                  idToken: googleAuth.idToken,
-                  accessToken: googleAuth.accessToken));
-          DocumentSnapshot doc = await userRef.doc(authResult.user!.uid).get();
-          print(doc.exists);
-          if (doc.exists) {
-            currentUser = AppUserModel.fromDocument(doc);
-            // final bool _isOkay = await UserAPI().addUser(currentUser!);
-
-            return true;
-          } else {
-            final AppUserModel _appUser = AppUserModel(
-              id: authResult.user!.uid,
-              name: authResult.user!.displayName,
-              email: authResult.user!.email,
-              phoneNo: "",
-              androidNotificationToken: "",
-              imageUrl: authResult.user!.photoURL,
-              password: "",
-              subscriptionEndTIme: DateTime.now().toIso8601String(),
-              isAdmin: false,
-            );
-            final bool _isOkay = await DatabaseMethods().addUser(_appUser);
-            if (_isOkay) {
-              currentUser = _appUser;
-              return true;
-
-              // UserLocalData().storeAppUserData(appUser: _appUser);
-            } else {
-              return false;
-            }
-          }
-        } catch (error) {
-          CustomToast.errorToast(message: error.toString());
-        }
-      }
-    }
-    return false;
-  }
-
   Future<UserCredential?> signUp({
     required final String password,
     required final String? name,
@@ -147,7 +86,7 @@ class AuthenticationService {
       assert(user != null);
       assert(await user.user!.getIdToken() != null);
       if (user != null) {
-        await DatabaseMethods().addUserInfoToFirebase(
+        await FirebaseApi().addUserInfoToFirebase(
             password: password,
             name: name,
             createdAt: createdAt,
@@ -160,7 +99,7 @@ class AuthenticationService {
       }
       return user;
     } on FirebaseAuthException catch (e) {
-      errorToast(message: "$e.message");
+      GlobalMethods().printError(info: e.message!);
     }
   }
 }
