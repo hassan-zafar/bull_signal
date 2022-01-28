@@ -1,7 +1,9 @@
 import 'package:bull_signal/Database/database.dart';
 import 'package:bull_signal/Services/firebase_api.dart';
 import 'package:bull_signal/Services/global_method.dart';
+import 'package:bull_signal/Utils/consts.dart';
 import 'package:bull_signal/announcements/announcements.dart';
+import 'package:bull_signal/tools/custom_toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -88,7 +90,7 @@ class AuthenticationService {
       assert(user != null);
       assert(await user.user!.getIdToken() != null);
       if (user != null) {
-        await FirebaseApi().(
+        await DatabaseMethods().addUserInfoToFirebase(
             password: password,
             name: name,
             createdAt: createdAt,
