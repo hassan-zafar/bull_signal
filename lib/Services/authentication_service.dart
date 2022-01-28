@@ -1,5 +1,7 @@
+import 'package:bull_signal/Database/database.dart';
 import 'package:bull_signal/Services/firebase_api.dart';
 import 'package:bull_signal/Services/global_method.dart';
+import 'package:bull_signal/announcements/announcements.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -29,9 +31,9 @@ class AuthenticationService {
         print(" auth service login uid: ${value.user!.uid}");
 
         // return value.user!.uid;
-        DatabaseMethods()
+        DatabaseMethodss()
             .fetchUserInfoFromFirebase(uid: value.user!.uid)
-            .then((value) => Get.off(() => LandingPage()));
+            .then((value) => Get.off(() => Announcements()));
       });
       // return result.user!.uid;
     } on FirebaseAuthException catch (e) {
