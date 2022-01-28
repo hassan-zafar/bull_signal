@@ -1,12 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:the_learning_castle_v2/database/database.dart';
-import 'package:the_learning_castle_v2/services/notificationHandler.dart';
-import 'package:the_learning_castle_v2/tools/loading.dart';
-
 import 'package:uuid/uuid.dart';
-
 import 'package:image/image.dart' as Im;
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';

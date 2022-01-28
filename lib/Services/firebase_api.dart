@@ -1,3 +1,5 @@
+import 'package:bull_signal/Models/announcements_model.dart';
+import 'package:bull_signal/Utils/consts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseApi {
