@@ -16,3 +16,14 @@ TextStyle titleTextStyle({double fontSize = 25, Color color = Colors.black}) {
       color: color,
       letterSpacing: 1.8);
 }
+
+TextStyle customTextStyle(
+    {FontWeight fontWeight = FontWeight.w300,
+    double fontSize = 25,
+    Color color = Colors.black}) {
+  return TextStyle(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      letterSpacing: 3);
+}
