@@ -1,3 +1,5 @@
+import 'package:bull_signal/Screens/credentials/loginRelated/login_page.dart';
+import 'package:bull_signal/Screens/credentials/signUpRelated/signup_page.dart';
 import 'package:flutter/material.dart';
 
 buildSignUpLoginButton(
@@ -55,5 +57,42 @@ buildSignUpLoginButton(
               ),
             ),
     ),
+  );
+}
+
+buildSignUpLoginText(
+    {required BuildContext context,
+    required String text1,
+    required String text2,
+    required bool moveToLogIn}) {
+  return Container(
+    color: Colors.transparent,
+    child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              text1,
+              style: const TextStyle(
+                fontSize: 15.0,
+              ),
+            ),
+            GestureDetector(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          moveToLogIn ? LoginPage() : const SignUpPage())),
+              child: Text(
+                text2,
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                    fontStyle: FontStyle.italic),
+              ),
+            ),
+          ],
+        )),
   );
 }
