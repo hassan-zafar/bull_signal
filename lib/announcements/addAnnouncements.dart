@@ -6,8 +6,7 @@ import 'package:image/image.dart' as Im;
 import 'package:path_provider/path_provider.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../constants.dart';
-import '../landingPage.dart';
+
 
 class AddAnnouncements extends StatefulWidget {
   @override

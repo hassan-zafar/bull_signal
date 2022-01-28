@@ -125,13 +125,13 @@ class _AnnouncementsState extends State<Announcements> {
                   getAnnouncements();
                   Navigator.pop(context);
                 },
-                child: Text(
+                child: const Text(
                   'Delete Announcement',
                 ),
               ),
               SimpleDialogOption(
                 onPressed: () => Navigator.pop(context),
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
               )
             ],
           );
