@@ -63,7 +63,7 @@ class _AnnouncementsState extends State<Announcements> {
                 padding: const EdgeInsets.all(12.0),
                 child: GestureDetector(
                   onLongPress: () {
-                    return currentUser.isAdmin!
+                    return currentUser!.isAdmin!
                         ? deleteNotification(
                             context, allAnnouncements[index].announcementId!)
                         : null;
