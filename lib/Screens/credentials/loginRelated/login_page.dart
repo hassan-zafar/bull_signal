@@ -1,13 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sketch_to_real/Database/database.dart';
-import 'package:sketch_to_real/common_ui_functions.dart';
-import 'package:sketch_to_real/constants.dart';
-import 'package:sketch_to_real/screens/homepage.dart';
-import 'package:sketch_to_real/services/authentication_service.dart';
-import 'package:sketch_to_real/tools/custom_toast.dart';
-import 'package:sketch_to_real/tools/loading.dart';
-
-import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:get/get.dart';
 import 'forget_password_page.dart';
 
@@ -49,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Hero(
                               tag: "logo",
                               child: Image.asset(
-                                logo,
+                                'logo',
                                 height: 90,
                               )),
                         ),
