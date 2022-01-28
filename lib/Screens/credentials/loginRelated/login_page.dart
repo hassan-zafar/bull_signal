@@ -1,5 +1,11 @@
+import 'package:bull_signal/Database/database.dart';
+import 'package:bull_signal/Services/authentication_service.dart';
 import 'package:bull_signal/Utils/commonWidgets.dart';
 import 'package:bull_signal/Utils/consts.dart';
+import 'package:bull_signal/Utils/palette.dart';
+import 'package:bull_signal/announcements/announcements.dart';
+import 'package:bull_signal/tools/custom_toast.dart';
+import 'package:bull_signal/tools/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'forget_password_page.dart';
@@ -47,34 +53,34 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                     Padding(
-                       padding: const EdgeInsets.only(left: 12.0),
-                       child: TextFormField(
-                         controller: _emailController,
-                         keyboardType: TextInputType.text,
-                         validator: (val) {
-                           if (val == null) {
-                             return null;
-                           }
-                           if (val.isEmpty) {
-                             return "Field is Empty";
-                           } else if (!val.contains("@") ||
-                               val.trim().length < 4) {
-                             return "Invalid E-mail!";
-                           } else {
-                             return null;
-                           }
-                         },
-                         // onSaved: (val) => phoneNo = val,
-                         autofocus: true,
-                         decoration: const InputDecoration(
-                           border: InputBorder.none,
-                           labelText: "E-mail",
-                           labelStyle: TextStyle(fontSize: 15.0),
-                           hintText: "Please enter your valid E-mail",
-                         ),
-                       ),
-                     ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: TextFormField(
+                          controller: _emailController,
+                          keyboardType: TextInputType.text,
+                          validator: (val) {
+                            if (val == null) {
+                              return null;
+                            }
+                            if (val.isEmpty) {
+                              return "Field is Empty";
+                            } else if (!val.contains("@") ||
+                                val.trim().length < 4) {
+                              return "Invalid E-mail!";
+                            } else {
+                              return null;
+                            }
+                          },
+                          // onSaved: (val) => phoneNo = val,
+                          autofocus: true,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            labelText: "E-mail",
+                            labelStyle: TextStyle(fontSize: 15.0),
+                            hintText: "Please enter your valid E-mail",
+                          ),
+                        ),
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -126,9 +132,9 @@ class _LoginPageState extends State<LoginPage> {
                               MaterialPageRoute(
                                   builder: (context) =>
                                       const ForgetPasswordPage())),
-                          child:  const Padding(
-                            padding:  EdgeInsets.all(8.0),
-                            child:  Hero(
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Hero(
                               tag: "passFor",
                               child: Text(
                                 "Forgot Password?",
@@ -202,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
           .fetchUserInfoFromFirebase(uid: userId!)
           .then((value) => setState(() {
                 _isLoading = false;
-                Get.off(() => HomePage());
+                Get.off(() => Announcements());
               }));
     }
   }
