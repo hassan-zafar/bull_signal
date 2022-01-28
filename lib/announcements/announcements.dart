@@ -1,6 +1,7 @@
 import 'package:bull_signal/Models/announcements_model.dart';
 import 'package:bull_signal/Services/firebase_api.dart';
 import 'package:bull_signal/Utils/consts.dart';
+import 'package:bull_signal/tools/loading.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,7 +47,7 @@ class _AnnouncementsState extends State<Announcements> {
           : Container(),
       body: ListView(
         shrinkWrap: true,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         children: [
           Center(
             child: Text(
@@ -62,16 +63,15 @@ class _AnnouncementsState extends State<Announcements> {
                 padding: const EdgeInsets.all(12.0),
                 child: GestureDetector(
                   onLongPress: () {
-                    return isAdmin!
+                    return currentUser.isAdmin!
                         ? deleteNotification(
                             context, allAnnouncements[index].announcementId!)
                         : null;
                   },
                   child: _isLoading
                       ? LoadingIndicator()
-                      : GlassContainer(
-                          opacity: 0.6,
-                          shadowStrength: 16,
+                      : Container(
+                     
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
