@@ -239,19 +239,17 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.image),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Text(
-                          'Upload Image',
-                        ),
-                      ],
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.image),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        'Upload Image',
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -259,16 +257,15 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
                 onPressed: () => Navigator.pop(context),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                      child: Row(
-                    children: [
-                      const Icon(Icons.exit_to_app),
-                      const SizedBox(
+                  child: Row(
+                    children: const [
+                      Icon(Icons.exit_to_app),
+                      SizedBox(
                         width: 5,
                       ),
-                      const Text('Cancel'),
+                      Text('Cancel'),
                     ],
-                  )),
+                  ),
                 ),
               )
             ],

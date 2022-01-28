@@ -8,7 +8,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:uuid/uuid.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -107,20 +106,30 @@ class CommentsNChatState extends State<CommentsNChat> {
     print(widget.chatId);
     return StreamBuilder<QuerySnapshot>(
       stream: chatRoomRef
-          .doc(isAdmin! ? widget.chatId : currentUser!.id)
+          .doc(currentUser!.isAdmin! ? widget.chatId : currentUser!.id)
           .collection("chats")
           .orderBy("timestamp", descending: false)
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return LoadingIndicator();
+          return const LoadingIndicator();
         }
         List<CommentsNMessages> chatMessages = [];
+        List<CommentsNMessages> pinnedMessages = [];
         snapshot.data!.docs.forEach((doc) {
-          chatMessages.add(CommentsNMessages.fromDocument(doc));
+          CommentsNMessages temp = CommentsNMessages.fromDocument(doc);
+
+          if (temp.isPinned!) {
+            pinnedMessages.add(CommentsNMessages.fromDocument(doc));
+          } else {
+            chatMessages.add(CommentsNMessages.fromDocument(doc));
+          }
         });
+        List<CommentsNMessages> allMessages =
+            [...pinnedMessages, ...chatMessages].toSet().toList();
+
         return ListView(
-          children: chatMessages,
+          children: allMessages,
         );
       },
     );
@@ -134,18 +143,6 @@ class CommentsNChatState extends State<CommentsNChat> {
         for (int i = 0; i < commentsListGlobal.length; i++) {
           if (_commentNMessagesController.text
               .contains("@${commentsListGlobal[i].name}")) {
-            // await activityFeedRef
-            //     .doc(commentsListGlobal[i].userId)
-            //     .collection('feedItems')
-            //     .add({
-            //   "type": "commentMention",
-            //   "commentData": _commentNMessagesController.text,
-            //   "name": currentUser!.name,
-            //   "userId": currentUser!.id,
-            //   "postId": postId,
-            //   "mediaUrl": postMediaUrl,
-            //   "timestamp": DateTime.now(),
-            // });
             sendAndRetrieveMessage(
                 context: context,
                 token: commentsListGlobal[i].androidNotificationToken!,
@@ -155,19 +152,7 @@ class CommentsNChatState extends State<CommentsNChat> {
           }
         }
       }
-      //     else{
-      //   activityFeedRef.doc(postOwnerId).collection('feedItems').add({
-      //     "type": "commentMention",
-      //     "commentData": _commentNMessagesController.text,
-      //     "name": currentUser.name,
-      //     "userId": currentUser.id,
-      //     "userProfileImg": currentUser.photoUrl,
-      //     "postId": postId,
-      //     "mediaUrl": postMediaUrl,
-      //     "timestamp": timestamp,
-      //   });
-      //
-      // }
+
       commentsRef.doc(postId).collection("comments").doc(commentId).set({
         "name": currentUser!.name,
         "userId": currentUser!.id,
@@ -187,7 +172,7 @@ class CommentsNChatState extends State<CommentsNChat> {
         isAdminChat: false,
       );
     } else {
-     errorToast(message: "Comment shouldn't be left Empty");
+      errorToast(message: "Comment shouldn't be left Empty");
     }
     _commentNMessagesController.clear();
   }
@@ -291,7 +276,7 @@ class CommentsNChatState extends State<CommentsNChat> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 "Comments",
-                style: titleTextStyle( color: Theme.of(context).dividerColor),
+                style: titleTextStyle(color: Theme.of(context).dividerColor),
               ),
             ),
             Padding(
@@ -340,6 +325,7 @@ class CommentsNMessages extends StatefulWidget {
   final String? comment;
   final Timestamp? timestamp;
   final bool? isComment;
+  final bool? isPinned;
   final bool? isProductComment;
   final String? commentId;
   final Map? likesMap;
@@ -356,6 +342,7 @@ class CommentsNMessages extends StatefulWidget {
     this.isComment,
     this.commentId,
     this.likes,
+    this.isPinned,
     this.likesMap,
     this.isProductComment,
     this.nestedCommentsMap,
@@ -370,7 +357,8 @@ class CommentsNMessages extends StatefulWidget {
       userId: doc.data()['userId'],
       name: doc.data()['name'],
       isComment: doc.data()['isComment'],
-      commentId: doc.data()["commentId"],
+      commentId: doc.data()["commentId"], isPinned: doc.data()["isPinned"],
+
       likes: doc.data()["likes"],
       likesMap: doc.data()["likesMap"],
       postId: doc.data()["postId"],
@@ -439,8 +427,7 @@ class _CommentsNMessagesState extends State<CommentsNMessages> {
                     Text(
                       timeago.format(widget.timestamp!.toDate()),
                       style: TextStyle(
-                          color: Theme.of(context).dividerColor,
-                          fontSize: 12),
+                          color: Theme.of(context).dividerColor, fontSize: 12),
                     ),
                     SizedBox(
                       height: 8,
@@ -463,8 +450,7 @@ class _CommentsNMessagesState extends State<CommentsNMessages> {
                                   "likesMap": {currentUser!.id: false}
                                 });
 
-                                   errorToast(
-        message:  "Like Removed");
+                                errorToast(message: "Like Removed");
                               } else {
                                 setState(() {
                                   commentLikes += 1;
@@ -498,13 +484,11 @@ class _CommentsNMessagesState extends State<CommentsNMessages> {
                                     title: "Comment Liked",
                                     context: context);
 
-                                   errorToast(
-        message:  "Comment Liked");
+                                errorToast(message: "Comment Liked");
                               }
                             },
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 8, right: 8),
+                              padding: const EdgeInsets.only(left: 8, right: 8),
                               child: Text("$commentLikes  Like"),
                             )),
                         GestureDetector(
@@ -513,8 +497,7 @@ class _CommentsNMessagesState extends State<CommentsNMessages> {
                                   "@${widget.name} ";
                             },
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 8, right: 8),
+                              padding: const EdgeInsets.only(left: 8, right: 8),
                               child: Text("Reply"),
                             ))
                       ],

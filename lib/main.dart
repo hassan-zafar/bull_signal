@@ -1,3 +1,5 @@
+import 'package:bull_signal/Screens/webview.dart';
+import 'package:bull_signal/Services/user_state.dart';
 import 'package:bull_signal/announcements/announcements.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -21,6 +23,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   await GetStorage.init();
+  await Firebase.initializeApp();
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await flutterLocalNotificationsPlugin
@@ -33,6 +37,7 @@ Future<void> main() async {
     badge: true,
     sound: true,
   );
+
   runApp(const MyApp());
 }
 
@@ -56,7 +61,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Announcements(),
+      home: const Webview(),
     );
   }
 }
