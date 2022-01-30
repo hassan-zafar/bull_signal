@@ -26,8 +26,8 @@ class UserState extends StatelessWidget {
                   .fetchUserInfoFromFirebase(uid: userSnapshot.data!.uid)
                   .then((value) {
                 print('The user is already logged in');
+                return Announcements();
               });
-              return Announcements();
 
               // MainScreens();
             } else {
