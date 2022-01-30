@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:bull_signal/Database/database.dart';
+import 'package:bull_signal/Screens/webview.dart';
 import 'package:bull_signal/Services/firebase_api.dart';
 import 'package:bull_signal/tools/custom_toast.dart';
 import 'package:bull_signal/tools/loading.dart';
@@ -102,6 +103,21 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
                       ),
                       const SizedBox(
                         height: 25.0,
+                      ),
+                      GestureDetector(
+                        onTap: () =>
+                            Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Webview(),
+                        )),
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.send_outlined),
+                              Text("OPen TradingView"),
+                            ],
+                          ),
+                        ),
                       ),
                       GestureDetector(
                         onTap: () => handleSubmit(),

@@ -8,9 +8,11 @@ final commentsRef = FirebaseFirestore.instance.collection('comments');
 final chatRoomRef = FirebaseFirestore.instance.collection('chatRoom');
 final chatListRef = FirebaseFirestore.instance.collection('chatLists');
 
-const String logo = 'asd';
-const String loginIcon = 'asd';
-const String signUp = 'asd';
+const String logo = 'assets/images/email.png';
+const String logout = 'assets/images/logOut.svg';
+
+const String loginIcon = 'assets/images/login.svg';
+const String signUp = 'assets/images/signUp.svg';
 AppUserModel? currentUser;
 String? uid;
 
