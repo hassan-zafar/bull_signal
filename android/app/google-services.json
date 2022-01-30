@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "126290328783",
-    "project_id": "bull-signal-9a898",
-    "storage_bucket": "bull-signal-9a898.appspot.com"
+    "project_number": "127968863702",
+    "project_id": "bull-signal-c3a7a",
+    "storage_bucket": "bull-signal-c3a7a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:126290328783:android:57c182ee0cc454a8ae8bba",
+        "mobilesdk_app_id": "1:127968863702:android:ff99e83a9147b50a853077",
         "android_client_info": {
           "package_name": "com.hassan.bull_signal"
         }
       },
       "oauth_client": [
         {
-          "client_id": "126290328783-84q094la0mpd8rupv6qa6uc0r5no2n8h.apps.googleusercontent.com",
+          "client_id": "127968863702-e4360f1k2leeccaabcdi00qa644a153e.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.hassan.bull_signal",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "126290328783-r003tr0hqigpq46pfcpl930q3od26pfi.apps.googleusercontent.com",
+          "client_id": "127968863702-mitbhcmh8e3a1r042btl5vtoards0aqg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDKXvAIOUFtjNbzdLBNbYeWK4EX4-PulAw"
+          "current_key": "AIzaSyAUOklz64K8JIi-Qf6Yz95F77wrVg1buDA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "126290328783-r003tr0hqigpq46pfcpl930q3od26pfi.apps.googleusercontent.com",
+              "client_id": "127968863702-mitbhcmh8e3a1r042btl5vtoards0aqg.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

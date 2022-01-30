@@ -115,7 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: buildSignUpLoginButton(
                               context: context,
                               btnText: "SignUp",
-                              assetImage: signUp,
+                              assetImage: logo,
                               color: containerColor,
                               hasIcon: true),
                         ),

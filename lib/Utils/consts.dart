@@ -9,10 +9,10 @@ final chatRoomRef = FirebaseFirestore.instance.collection('chatRoom');
 final chatListRef = FirebaseFirestore.instance.collection('chatLists');
 
 const String logo = 'assets/images/email.png';
-const String logout = 'assets/images/logOut.svg';
+// const String logout = 'assets/images/logOut.svg';
 
-const String loginIcon = 'assets/images/login.svg';
-const String signUp = 'assets/images/signUp.svg';
+// const String loginIcon = 'assets/images/logIn.svg';
+// const String signUp = 'assets/images/signUp.svg';
 AppUserModel? currentUser;
 String? uid;
 

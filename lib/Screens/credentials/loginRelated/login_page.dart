@@ -152,11 +152,12 @@ class _LoginPageState extends State<LoginPage> {
                         child: GestureDetector(
                           onTap: () => _handleLogin(),
                           child: buildSignUpLoginButton(
-                              context: context,
-                              btnText: "Log In",
-                              assetImage: loginIcon,
-                              color: containerColor,
-                              hasIcon: true),
+                            context: context,
+                            btnText: "Log In",
+                            assetImage: logo,
+                            color: containerColor,
+                            hasIcon: false,
+                          ),
                         ),
                       ),
 
