@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:bull_signal/Database/database.dart';
 import 'package:bull_signal/Screens/webview.dart';
 import 'package:bull_signal/Services/firebase_api.dart';
+import 'package:bull_signal/Services/notificationHandler.dart';
 import 'package:bull_signal/tools/custom_toast.dart';
 import 'package:bull_signal/tools/loading.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -188,13 +189,13 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
     final String? description,
     final String? imageUrl,
     final String? eachUserToken,
-    final String? eachUserId,
+    // final String? eachUserId,
   }) async {
     return FirebaseApi().addAnnouncements(
         description: description!,
         imageUrl: imageUrl!,
         eachUserToken: eachUserToken!,
-        eachUserId: eachUserId!,
+        // eachUserId: eachUserId!,
         announcementTitle: announcementTitle!,
         postId: postId);
   }
@@ -215,20 +216,18 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
               errorToast(message: "Couldn't connect to servers!!");
             })
           : "";
-      // allUsersList.forEach((e) async {
-      //   await createPostInFirestore(
-      //       announcementTitle: _titleTextController.text,
-      //       imageUrl: imageUrl,
-      //       eachUserId: e.id,
-      //       eachUserToken: e.androidNotificationToken,
-      //       description: _descriptionTextController.text);
-      //   sendAndRetrieveMessage(
-      //       token: e.androidNotificationToken!,
-      //       message: _descriptionTextController.text,
-      //       context: context,
-      //       imageUrl: imageUrl,
-      //       title: _titleTextController.text);
-      // });
+
+      await createPostInFirestore(
+          announcementTitle: _titleTextController.text,
+          imageUrl: imageUrl,
+          eachUserToken: _titleTextController.text,
+          description: _descriptionTextController.text);
+      sendAndRetrieveMessage(
+          token: _titleTextController.text,
+          message: _descriptionTextController.text,
+          context: context,
+          imageUrl: imageUrl,
+          title: _titleTextController.text);
 
       _descriptionTextController.clear();
       _titleTextController.clear();

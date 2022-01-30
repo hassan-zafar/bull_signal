@@ -7,13 +7,13 @@ class FirebaseApi {
       {required final String postId,
       required final String announcementTitle,
       required final String imageUrl,
-      required final String eachUserId,
+      // required final String eachUserId,
       required String eachUserToken,
       required final String description}) async {
     FirebaseFirestore.instance
         .collection("announcements")
-        .doc(eachUserId)
-        .collection("userAnnouncements")
+        // .doc(eachUserId)
+        // .collection("userAnnouncements")
         .doc(postId)
         .set({
       "announcementId": postId,

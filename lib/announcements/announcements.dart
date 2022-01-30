@@ -1,4 +1,5 @@
 import 'package:bull_signal/Models/announcements_model.dart';
+import 'package:bull_signal/Screens/comments_n_chat.dart';
 import 'package:bull_signal/Services/firebase_api.dart';
 import 'package:bull_signal/Utils/consts.dart';
 import 'package:bull_signal/tools/loading.dart';
@@ -37,14 +38,19 @@ class _AnnouncementsState extends State<Announcements> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: currentUser!.isAdmin!
-          ? FloatingActionButton(
-              onPressed: () => Get.to(() => AddAnnouncements())!
-                  .then((value) => getAnnouncements()),
-              child: const Icon(Icons.add),
-              tooltip: "Add New Announcement",
-            )
-          : Container(),
+      floatingActionButton: currentUser == null
+          ? LoadingIndicator()
+          : currentUser!.isAdmin!
+              ? FloatingActionButton(
+                  onPressed: () => Navigator.of(context)
+                      .push(MaterialPageRoute(
+                        builder: (context) => AddAnnouncements(),
+                      ))
+                      .then((value) => getAnnouncements()),
+                  child: const Icon(Icons.add),
+                  tooltip: "Add New Announcement",
+                )
+              : Container(),
       body: ListView(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
@@ -71,7 +77,6 @@ class _AnnouncementsState extends State<Announcements> {
                   child: _isLoading
                       ? LoadingIndicator()
                       : Container(
-                     
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
@@ -93,6 +98,22 @@ class _AnnouncementsState extends State<Announcements> {
                                   allAnnouncements[index].description!,
                                   style: customTextStyle(fontSize: 18),
                                 ),
+                                GestureDetector(
+                                    onTap: () => Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              CommentsNMessages(
+                                            postId: allAnnouncements[index]
+                                                .announcementId,
+                                            androidNotificationToken:
+                                                currentUser!
+                                                    .androidNotificationToken!,
+                                            userId: currentUser!.id,
+                                            isComment: true,
+                                            isProductComment: false,
+                                          ),
+                                        )),
+                                    child: const Text('View All Comments')),
                               ],
                             ),
                           ),
@@ -108,7 +129,6 @@ class _AnnouncementsState extends State<Announcements> {
   }
 
   deleteNotification(BuildContext parentContext, String id) {
-
     return showDialog(
         context: parentContext,
         builder: (context) {
@@ -116,7 +136,6 @@ class _AnnouncementsState extends State<Announcements> {
             children: <Widget>[
               SimpleDialogOption(
                 onPressed: () {
-   
                   getAnnouncements();
                   Navigator.pop(context);
                 },

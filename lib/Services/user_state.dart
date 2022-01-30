@@ -2,11 +2,19 @@ import 'package:bull_signal/Database/database.dart';
 import 'package:bull_signal/Screens/credentials/loginRelated/login_page.dart';
 import 'package:bull_signal/Utils/consts.dart';
 import 'package:bull_signal/announcements/announcements.dart';
+import 'package:bull_signal/tools/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class UserState extends StatelessWidget {
+class UserState extends StatefulWidget {
   const UserState({Key? key}) : super(key: key);
+
+  @override
+  State<UserState> createState() => _UserStateState();
+}
+
+class _UserStateState extends State<UserState> {
+  bool isLogged = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +34,14 @@ class UserState extends StatelessWidget {
                   .fetchUserInfoFromFirebase(uid: userSnapshot.data!.uid)
                   .then((value) {
                 print('The user is already logged in');
-                return Announcements();
+                // if (mounted) {
+                //   setState(() {
+                //     isLogged = true;
+                //   });
+                // }
+                // print(isLogged);
               });
-
+              return Announcements();
               // MainScreens();
             } else {
               print('The user didn\'t login yet');

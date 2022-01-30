@@ -14,7 +14,7 @@ Future<Map<String, dynamic>?> sendAndRetrieveMessage(
     String? imageUrl,
     required String title}) async {
   final String serverToken =
-      "AAAA6EH2iew:APA91bELqfEi09-vZSlwWcaJd4W30zz8d2SMtU-BZ8mF306gF6rycPGggJPn13smNS71fA--zMVA5Y-2Zcl24iJLYlxzLNgCDhlh4UBh7Yy16NEWvUzQsDukkG_WLVorTKRy5xlQDgdk";
+      "AAAAHcuJ5dY:APA91bEnnYQLBQ3Co7adJa3RlxPkg8LsuF9ySk8VOzfg3ETHouXtysJmlNzkniGQNiBVjNTcoLJCK3Z2cINUcsww8HxfI82NB-BibVTr02lUPpChs-uePcWdifqH44OA5r4BGJ4BjGaF";
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   await http
