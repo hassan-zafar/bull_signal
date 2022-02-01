@@ -63,9 +63,9 @@ class _AnnouncementsState extends State<Announcements> {
         ),
         actions: [
           IconButton(
-              onPressed: () => MaterialPageRoute(
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => UserInfoScreen(),
-                  ),
+                  )),
               icon: Icon(Icons.person))
         ],
       ),
