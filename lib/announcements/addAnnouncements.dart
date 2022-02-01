@@ -39,7 +39,10 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: const Text("Add Announcements"),
+              title: const Text(
+                "Add Announcements",
+                style: TextStyle(fontSize: 18),
+              ),
               backgroundColor: Colors.transparent,
               centerTitle: true,
               elevation: 0,
@@ -59,7 +62,7 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
                         borderRadius: BorderRadius.all(Radius.circular(8.0))),
                     label: const Text(
                       'Add Media',
-                      style: TextStyle(fontSize: 10.0),
+                      style: TextStyle(fontSize: 8.0),
                     ),
                   ),
                 )
@@ -81,7 +84,7 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
                               ? 'Announcement Title Too Short'
                               : null,
                           decoration: const InputDecoration(
-                              border: InputBorder.none,
+                              // border: InputBorder.none,
                               hintText: "Enter title of announcement",
                               labelText: "Title"),
                         ),
@@ -97,11 +100,42 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
                               ? 'Announcement Description Title Too Short'
                               : null,
                           decoration: const InputDecoration(
-                              border: InputBorder.none,
+                              // border: InputBorder.none,
                               hintText: "Enter Description of announcement",
                               labelText: "Description"),
                         ),
                       ),
+                      this.file == null
+                          ? Container(
+                              margin: EdgeInsets.all(10),
+                              height: 200,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1),
+                                borderRadius: BorderRadius.circular(4),
+                                color: Theme.of(context).backgroundColor,
+                              ),
+                            )
+                          : Container(
+                              margin: EdgeInsets.all(10),
+                              height: 200,
+                              width: 200,
+                              child: Container(
+                                height: 200,
+                                // width: 200,
+                                decoration: BoxDecoration(
+                                  // borderRadius: BorderRadius.only(
+                                  //   topLeft: const Radius.circular(40.0),
+                                  // ),
+                                  color: Theme.of(context).backgroundColor,
+                                ),
+                                child: Image.file(
+                                  this.file!,
+                                  fit: BoxFit.contain,
+                                  alignment: Alignment.center,
+                                ),
+                              ),
+                            ),
                       const SizedBox(
                         height: 25.0,
                       ),
@@ -114,8 +148,10 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
                           padding: const EdgeInsets.all(24.0),
                           child: Row(
                             children: const [
-                              Icon(Icons.send_outlined),
-                              Text("OPen TradingView"),
+                              Icon(
+                                Icons.auto_graph_outlined,
+                              ),
+                              Text(" Open TradingView"),
                             ],
                           ),
                         ),
@@ -124,12 +160,14 @@ class _AddAnnouncementsState extends State<AddAnnouncements> {
                         onTap: () => handleSubmit(),
                         child: Padding(
                           padding: const EdgeInsets.all(24.0),
-                          child: Row(
-                            children: const [
-                              Icon(Icons.send_outlined),
-                              Text("Send Announcement"),
-                            ],
-                          ),
+                          child: isUploading
+                              ? const LoadingIndicator()
+                              : Row(
+                                  children: const [
+                                    Icon(Icons.send_outlined),
+                                    Text(" Send Announcement"),
+                                  ],
+                                ),
                         ),
                       )
                     ],
