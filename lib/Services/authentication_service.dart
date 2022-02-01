@@ -48,13 +48,13 @@ class AuthenticationService {
     }
   }
 
-  Future deleteUser(String email, String password) async {
+  Future deleteUser({String? email, String? password}) async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
 
     try {
       User user = _firebaseAuth.currentUser!;
       AuthCredential credentials =
-          EmailAuthProvider.credential(email: email, password: password);
+          EmailAuthProvider.credential(email: email!, password: password!);
       print(user);
       UserCredential result =
           await user.reauthenticateWithCredential(credentials);
