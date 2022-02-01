@@ -1,3 +1,4 @@
+import 'package:bull_signal/Screens/Admin/allUsers.dart';
 import 'package:bull_signal/Utils/consts.dart';
 import 'package:bull_signal/tools/loading.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -189,9 +190,25 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            userTitle(title: 'Content'),
-                            userTitle(title: 'User preferences'),
-                            userTitle(title: "Account"),
+                            currentUser!.isAdmin!
+                                ? Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () => Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            const UserNSearch(),
+                                      )),
+                                      splashColor: Colors.red,
+                                      child: const ListTile(
+                                        title: Text('All Users'),
+                                        trailing:
+                                            Icon(Icons.chevron_right_rounded),
+                                        leading: Icon(Icons.all_inbox_outlined),
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox(),
                             currentUser!.isAdmin!
                                 ? Container()
                                 : Material(

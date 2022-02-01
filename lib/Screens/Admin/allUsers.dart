@@ -47,7 +47,7 @@ class _UserNSearchState extends State<UserNSearch>
 
   AppBar buildSearchField(context) {
     return AppBar(
-      backgroundColor: Theme.of(context).accentColor,
+      // backgroundColor: Theme.of(context).accentColor,
       title: TextFormField(
         controller: searchController,
         decoration: InputDecoration(
