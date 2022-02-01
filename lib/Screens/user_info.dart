@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class UserInfoScreen extends StatefulWidget {
   @override
   _UserInfoScreenState createState() => _UserInfoScreenState();
@@ -112,7 +111,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                 opacity: top <= 110.0 ? 1.0 : 0,
                                 child: Row(
                                   children: [
-                                     SizedBox(
+                                    SizedBox(
                                       width: 12,
                                     ),
                                     Container(
@@ -120,7 +119,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                       width: kToolbarHeight / 1.8,
                                       decoration: const BoxDecoration(
                                         boxShadow: [
-                                           BoxShadow(
+                                          BoxShadow(
                                             color: Colors.white,
                                             blurRadius: 1.0,
                                           ),
@@ -128,7 +127,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
                                           fit: BoxFit.fill,
-                                          image:  NetworkImage(
+                                          image: NetworkImage(
                                               'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg'),
                                         ),
                                       ),
@@ -151,26 +150,23 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                 children: [
                                   Text(
                                     "Settings",
-                                    style: titleTextStyle(
-                                         color: Colors.white),
+                                    style: titleTextStyle(color: Colors.white),
                                   ),
                                   const CircleAvatar(
                                     maxRadius: 50,
                                     minRadius: 30,
-                                    backgroundImage:   CachedNetworkImageProvider(
-                                            'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg')
-                                        ,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg'),
                                   ),
                                   Text(
                                     currentUser!.name! == null
                                         ? 'Guest'
                                         : currentUser!.name!,
                                     style: titleTextStyle(
-                                   
                                         fontSize: 20,
                                         color: Theme.of(context).dividerColor),
                                   ),
-                                
+
                                   // Container(
                                   //   margin: EdgeInsets.only(top: 8),
                                   //   padding: EdgeInsets.all(8),
@@ -192,11 +188,22 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             userTitle(title: 'Content'),
-
-                      
                             userTitle(title: 'User preferences'),
-
-                    currentUser!.isAdmin!
+                            userTitle(title: "Account"),
+                            Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () => Navigator.of(context)
+                                    .pushNamed(BillingScreen.routeName),
+                                splashColor: Colors.red,
+                                child: const ListTile(
+                                  title: Text('Billing'),
+                                  trailing: Icon(Icons.chevron_right_rounded),
+                                  leading: Icon(Icons.credit_card),
+                                ),
+                              ),
+                            ),
+                            currentUser!.isAdmin!
                                 ? Container()
                                 : Material(
                                     color: Colors.transparent,
@@ -243,14 +250,13 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                                   ),
                                                 ),
                                                 const Padding(
-                                                  padding:
-                                                      EdgeInsets.all(8.0),
+                                                  padding: EdgeInsets.all(8.0),
                                                   child: Text('Sign out'),
                                                 ),
                                               ],
                                             ),
-                                            content:
-                                                const Text('Do you wanna Sign out?'),
+                                            content: const Text(
+                                                'Do you wanna Sign out?'),
                                             actions: [
                                               TextButton(
                                                   onPressed: () async {
@@ -274,7 +280,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                         });
                                   },
                                   title: const Text('Logout'),
-                                  leading: const Icon(Icons.exit_to_app_rounded),
+                                  leading:
+                                      const Icon(Icons.exit_to_app_rounded),
                                 ),
                               ),
                             ),

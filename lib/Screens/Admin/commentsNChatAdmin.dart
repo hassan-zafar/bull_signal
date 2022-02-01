@@ -1,6 +1,7 @@
 import 'package:bull_signal/Models/users.dart';
 import 'package:bull_signal/Services/notificationHandler.dart';
 import 'package:bull_signal/Utils/consts.dart';
+import 'package:bull_signal/tools/custom_toast.dart';
 import 'package:bull_signal/tools/loading.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -91,7 +92,7 @@ class CommentsNChatAdminState extends State<CommentsNChatAdmin> {
               .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return LoadingIndicator();
+          return const LoadingIndicator();
         }
 
         List<CommentsNMessages> chatMessages = [];
@@ -107,7 +108,7 @@ class CommentsNChatAdminState extends State<CommentsNChatAdmin> {
   }
 
   addChatMessage() {
-    String commentId = Uuid().v1();
+    String commentId = const Uuid().v1();
     if (_commentNMessagesController.text.trim().length > 1) {
       chatRoomRef
           .doc(currentUser!.isAdmin != null && currentUser!.isAdmin == true
@@ -157,7 +158,7 @@ class CommentsNChatAdminState extends State<CommentsNChatAdmin> {
       // }
 
     } else {
-      BotToast.showText(text: "Message field shouldn't be left Empty");
+      errorToast(message: "Message field shouldn't be left Empty");
     }
     _commentNMessagesController.clear();
   }
@@ -181,17 +182,17 @@ class CommentsNChatAdminState extends State<CommentsNChatAdmin> {
             Expanded(
               child: buildChat(),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
               title: TextFormField(
                 controller: _commentNMessagesController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Write a message...",
                 ),
               ),
               trailing: IconButton(
                 onPressed: addChatMessage,
-                icon: Icon(
+                icon: const Icon(
                   Icons.send,
                   size: 40.0,
                 ),
@@ -215,7 +216,7 @@ class CommentsNMessages extends StatefulWidget {
   final Timestamp? timestamp;
   final String? commentId;
   final String? androidNotificationToken;
-  CommentsNMessages({
+  const CommentsNMessages({Key? key, 
     this.userName,
     this.userId,
     this.avatarUrl,
@@ -223,7 +224,7 @@ class CommentsNMessages extends StatefulWidget {
     this.timestamp,
     this.commentId,
     this.androidNotificationToken,
-  });
+  }) : super(key: key);
   factory CommentsNMessages.fromDocument(doc) {
     return CommentsNMessages(
       // avatarUrl: doc['avatarUrl'],
@@ -244,7 +245,7 @@ class _CommentsNMessagesState extends State<CommentsNMessages> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 12, right: 12, left: 12),
+      padding: const EdgeInsets.only(bottom: 12, right: 12, left: 12),
       child: buildMessageBubble(context),
     );
   }
@@ -258,12 +259,12 @@ class _CommentsNMessagesState extends State<CommentsNMessages> {
         decoration: BoxDecoration(
           color: isMe ? Colors.orange : Colors.brown,
           borderRadius: isMe
-              ? BorderRadius.only(
+              ? const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                  topLeft: Radius.circular(20),
+                  bottomRight:  Radius.circular(20),
+                  topLeft:  Radius.circular(20),
                 )
-              : BorderRadius.only(
+              : const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                   topRight: Radius.circular(20),
@@ -283,8 +284,8 @@ class _CommentsNMessagesState extends State<CommentsNMessages> {
                           backgroundImage:
                               CachedNetworkImageProvider(widget.avatarUrl!),
                         )
-                      : CircleAvatar(backgroundImage: AssetImage(logo)),
-                  SizedBox(
+                      : const CircleAvatar(backgroundImage: AssetImage(logo)),
+                  const SizedBox(
                     width: 8,
                   ),
                   Expanded(
@@ -298,14 +299,14 @@ class _CommentsNMessagesState extends State<CommentsNMessages> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text("${widget.userName} : ",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14.0,
                                     color: Colors.white)),
                             Flexible(
                               child: Text(
                                 "${widget.comment}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 14.0, color: Colors.white),
                               ),
                             ),
