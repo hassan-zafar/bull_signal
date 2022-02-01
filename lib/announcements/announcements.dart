@@ -110,7 +110,7 @@ class _AnnouncementsState extends State<Announcements> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   allAnnouncements[index].announcementTitle!,
-                                  // style: customTextStyle(),
+                                  style: customTextStyle(),
                                 ),
                               ),
                               Padding(
