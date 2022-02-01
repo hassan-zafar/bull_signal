@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'Admin/commentsNChatAdmin.dart';
+
 class UserInfoScreen extends StatefulWidget {
   @override
   _UserInfoScreenState createState() => _UserInfoScreenState();
@@ -69,8 +71,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
-    final notificationChange = Provider.of<NotificationSetProvider>(context);
+    // final themeChange = Provider.of<DarkThemeProvider>(context);
+    // final notificationChange = Provider.of<NotificationSetProvider>(context);
 
     return SafeArea(
       child: Scaffold(
@@ -190,19 +192,6 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                             userTitle(title: 'Content'),
                             userTitle(title: 'User preferences'),
                             userTitle(title: "Account"),
-                            Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () => Navigator.of(context)
-                                    .pushNamed(BillingScreen.routeName),
-                                splashColor: Colors.red,
-                                child: const ListTile(
-                                  title: Text('Billing'),
-                                  trailing: Icon(Icons.chevron_right_rounded),
-                                  leading: Icon(Icons.credit_card),
-                                ),
-                              ),
-                            ),
                             currentUser!.isAdmin!
                                 ? Container()
                                 : Material(
