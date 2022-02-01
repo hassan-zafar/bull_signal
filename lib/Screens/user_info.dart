@@ -113,7 +113,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                 opacity: top <= 110.0 ? 1.0 : 0,
                                 child: Row(
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 12,
                                     ),
                                     Container(

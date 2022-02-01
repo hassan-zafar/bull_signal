@@ -1,9 +1,11 @@
 import 'package:bull_signal/Models/announcements_model.dart';
 import 'package:bull_signal/Screens/comments_n_chat.dart';
+import 'package:bull_signal/Screens/user_info.dart';
 import 'package:bull_signal/Services/firebase_api.dart';
 import 'package:bull_signal/Utils/consts.dart';
 import 'package:bull_signal/tools/loading.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'addAnnouncements.dart';
@@ -39,7 +41,7 @@ class _AnnouncementsState extends State<Announcements> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: currentUser == null
-          ? LoadingIndicator()
+          ? const LoadingIndicator()
           : currentUser!.isAdmin!
               ? FloatingActionButton(
                   onPressed: () => Navigator.of(context)
@@ -51,19 +53,29 @@ class _AnnouncementsState extends State<Announcements> {
                   tooltip: "Add New Announcement",
                 )
               : Container(),
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          "Announcements",
+          style: titleTextStyle(
+              color: Theme.of(context).primaryTextTheme.bodyText1!.color!),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () => MaterialPageRoute(
+                    builder: (context) => UserInfoScreen(),
+                  ),
+              icon: Icon(Icons.person))
+        ],
+      ),
       body: ListView(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          Center(
-            child: Text(
-              "Announcements",
-              style: titleTextStyle(),
-            ),
-          ),
           ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -75,7 +87,7 @@ class _AnnouncementsState extends State<Announcements> {
                         : null;
                   },
                   child: _isLoading
-                      ? LoadingIndicator()
+                      ? const LoadingIndicator()
                       : Container(
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
