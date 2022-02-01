@@ -69,88 +69,91 @@ class _AnnouncementsState extends State<Announcements> {
               icon: Icon(Icons.person))
         ],
       ),
-      body: ListView(
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: GestureDetector(
-                  onLongPress: () {
-                    return currentUser!.isAdmin!
-                        ? deleteNotification(
-                            context, allAnnouncements[index].announcementId!)
-                        : null;
-                  },
-                  child: _isLoading
-                      ? const LoadingIndicator()
-                      : Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Column(
-                            crossAxisAlignment:
-                                // allAnnouncements[index].imageUrl != null
-                                //     ? CrossAxisAlignment.center
-                                //     :
-                                CrossAxisAlignment.start,
-                            children: [
-                              allAnnouncements[index].imageUrl != null
-                                  ? ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: CachedNetworkImage(
-                                          imageUrl: allAnnouncements[index]
-                                              .imageUrl!),
-                                    )
-                                  : Container(),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  allAnnouncements[index].announcementTitle!,
-                                  style: customTextStyle(),
+      body: RefreshIndicator(
+        onRefresh:()=> getAnnouncements(),
+        child: ListView(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: GestureDetector(
+                    onLongPress: () {
+                      return currentUser!.isAdmin!
+                          ? deleteNotification(
+                              context, allAnnouncements[index].announcementId!)
+                          : null;
+                    },
+                    child: _isLoading
+                        ? const LoadingIndicator()
+                        : Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Column(
+                              crossAxisAlignment:
+                                  // allAnnouncements[index].imageUrl != null
+                                  //     ? CrossAxisAlignment.center
+                                  //     :
+                                  CrossAxisAlignment.start,
+                              children: [
+                                allAnnouncements[index].imageUrl != null
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: CachedNetworkImage(
+                                            imageUrl: allAnnouncements[index]
+                                                .imageUrl!),
+                                      )
+                                    : Container(),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    allAnnouncements[index].announcementTitle!,
+                                    style: customTextStyle(),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  allAnnouncements[index].description!,
-                                  // style: customTextStyle(fontSize: 18),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    allAnnouncements[index].description!,
+                                    // style: customTextStyle(fontSize: 18),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
-                                    onTap: () => Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) => CommentsNChat(
-                                            postId: allAnnouncements[index]
-                                                .announcementId,
-                                            isPostComment: true,
-                                            chatId: allAnnouncements[index]
-                                                .announcementId,
-                                            isAdmin: currentUser!.isAdmin,
-                                            isProductComment: false,
-                                          ),
-                                        )),
-                                    child: const Text(
-                                      'View All Comments',
-                                      style: TextStyle(
-                                          color: Colors.cyan,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                              ),
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                      onTap: () => Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (context) => CommentsNChat(
+                                              postId: allAnnouncements[index]
+                                                  .announcementId,
+                                              isPostComment: true,
+                                              chatId: allAnnouncements[index]
+                                                  .announcementId,
+                                              isAdmin: currentUser!.isAdmin,
+                                              isProductComment: false,
+                                            ),
+                                          )),
+                                      child: const Text(
+                                        'View All Comments',
+                                        style: TextStyle(
+                                            color: Colors.cyan,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                ),
-              );
-            },
-            itemCount: allAnnouncements.length,
-          ),
-        ],
+                  ),
+                );
+              },
+              itemCount: allAnnouncements.length,
+            ),
+          ],
+        ),
       ),
     );
   }

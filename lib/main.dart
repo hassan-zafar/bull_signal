@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Bull Signal',
       theme: ThemeData(
-          appBarTheme: AppBarTheme(backgroundColor: Colors.transparent),
+          appBarTheme: const AppBarTheme(backgroundColor: Colors.transparent),
           // primarySwatch: Colors.accents,
           brightness: Brightness.dark),
       home: const UserState(),
