@@ -170,15 +170,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                         fontSize: 20,
                                         color: Theme.of(context).dividerColor),
                                   ),
-                                  Text(
-                                    currentUser!.email! == null
-                                        ? 'Guest'
-                                        : currentUser!.email!,
-                                    style: titleTextStyle(
-                                        context: context,
-                                        fontSize: 16,
-                                        color: Theme.of(context).dividerColor),
-                                  ),
+                                
                                   // Container(
                                   //   margin: EdgeInsets.only(top: 8),
                                   //   padding: EdgeInsets.all(8),
@@ -201,163 +193,10 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                           children: [
                             userTitle(title: 'Content'),
 
-                            Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () => Navigator.of(context)
-                                    .pushNamed(WishlistScreen.routeName),
-                                splashColor: Colors.red,
-                                child: ListTile(
-                                  title: const Text('Favourite'),
-                                  trailing: const Icon(Icons.chevron_right_rounded),
-                                  leading: Icon(MyAppIcons.wishlist),
-                                ),
-                              ),
-                            ),
-                            Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () => Navigator.of(context)
-                                    .pushNamed(DownloadScreen.routeName),
-                                splashColor: Colors.red,
-                                child: const ListTile(
-                                  title: const Text('Downloads'),
-                                  trailing: const Icon(Icons.chevron_right_rounded),
-                                  leading:
-                                      const Icon(Icons.download_for_offline_outlined),
-                                ),
-                              ),
-                            ),
-                            // Material(
-                            //   color: Colors.transparent,
-                            //   child: InkWell(
-                            //     onTap: () => Navigator.of(context)
-                            //         .pushNamed(WishlistScreen.routeName),
-                            //     splashColor: Colors.red,
-                            //     child: ListTile(
-                            //       title: Text('Downloads'),
-                            //       trailing: Icon(Icons.chevron_right_rounded),
-                            //       leading:
-                            //           Icon(Icons.download_for_offline_rounded),
-                            //     ),
-                            //   ),
-                            // ),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(left: 8.0),
-                            //   child: userTitle(title: 'User Information'),
-                            // ),
-                            // Divider(
-                            //   thickness: 1,
-                            //   color: Colors.grey,
-                            // ),
-                            // userListTile('Email', _email ?? '', 0, context),
-                            // userListTile('Phone number',
-                            //     _phoneNumber.toString(), 1, context),
-                            // // userListTile('Shipping address', '', 2, context),
-                            // userListTile(
-                            //     'joined date', _joinedAt ?? '', 3, context),
-
+                      
                             userTitle(title: 'User preferences'),
 
-                            ListTile(
-                              onTap: () => Share.share(
-                                  'check out this app https://play.google.com/store/apps/details?id=com.whatsapp',
-                                  subject: 'Look at this app!'),
-                              title: const Text("Invite a Friend"),
-                              trailing: const Icon(Icons.chevron_right_rounded),
-                              leading: const Icon(
-                                Icons.person_add,
-                                color: Colors.yellow,
-                              ),
-                            ),
-                            ListTileSwitch(
-                              value: playInBackground,
-                              // backgroundPlayChanges.backgroundPlaySet,
-                              leading: const Icon(Icons.picture_in_picture_rounded),
-                              onChanged: (value) {
-                                print(value);
-
-                                setState(() {
-                                  // backgroundPlayChanges.backgroundPlaySet
-                                  playInBackground = value;
-                                });
-                              },
-                              visualDensity: VisualDensity.comfortable,
-                              switchType: SwitchType.cupertino,
-                              switchActiveColor: Colors.indigo,
-                              title: const Text('Play in Background'),
-                            ),
-                            ListTileSwitch(
-                              value: downloadOnlyOverWifi,
-                              leading: const Icon(Icons.wifi),
-                              onChanged: (value) {
-                                print(value);
-
-                                setState(() {
-                                  downloadOnlyOverWifi = value;
-                                });
-                              },
-                              visualDensity: VisualDensity.comfortable,
-                              switchType: SwitchType.cupertino,
-                              switchActiveColor: Colors.indigo,
-                              title: const Text('Download only over wifi'),
-                            ),
-                            ListTileSwitch(
-                              value: autoPlayChange.autoPlay,
-                              leading: const Icon(Icons.refresh),
-                              onChanged: (value) {
-                                print(value);
-
-                                setState(() {
-                                  autoPlayChange.autoPlay = value;
-                                });
-                              },
-                              visualDensity: VisualDensity.comfortable,
-                              switchType: SwitchType.cupertino,
-                              switchActiveColor: Colors.indigo,
-                              title: const Text('Auto Play'),
-                            ),
-                            ListTileSwitch(
-                              value: notificationChange.notificationSet,
-                              leading: const Icon(Icons.notifications),
-                              onChanged: (value) {
-                                setState(() {
-                                  notificationChange.notificationSet = value;
-                                });
-                              },
-                              visualDensity: VisualDensity.comfortable,
-                              switchType: SwitchType.cupertino,
-                              switchActiveColor: Colors.indigo,
-                              title: const Text('Allow Notifications'),
-                            ),
-                            ListTileSwitch(
-                              value: themeChange.darkTheme,
-                              leading: Icon(FontAwesomeIcons.moon),
-                              onChanged: (value) {
-                                setState(() {
-                                  themeChange.darkTheme = value;
-                                });
-                              },
-                              visualDensity: VisualDensity.comfortable,
-                              switchType: SwitchType.cupertino,
-                              switchActiveColor: Colors.indigo,
-                              title: const Text('Dark theme'),
-                            ),
-                            userTitle(title: "Account"),
-                            Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () => Navigator.of(context)
-                                    .pushNamed(BillingScreen.routeName),
-                                splashColor: Colors.red,
-                                child: const ListTile(
-                                  title: Text('Billing'),
-                                  trailing: Icon(Icons.chevron_right_rounded),
-                                  leading: Icon(Icons.credit_card),
-                                ),
-                              ),
-                            ),
-                            currentUser!.isAdmin!
+                    currentUser!.isAdmin!
                                 ? Container()
                                 : Material(
                                     color: Colors.transparent,
