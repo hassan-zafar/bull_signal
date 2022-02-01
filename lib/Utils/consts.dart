@@ -8,7 +8,7 @@ final commentsRef = FirebaseFirestore.instance.collection('comments');
 final chatRoomRef = FirebaseFirestore.instance.collection('chatRoom');
 final chatListRef = FirebaseFirestore.instance.collection('chatLists');
 
-const String logo = 'assets/images/email.png';
+const String logo = 'assets/images/logo.jpeg';
 // const String logout = 'assets/images/logOut.svg';
 
 // const String loginIcon = 'assets/images/logIn.svg';
