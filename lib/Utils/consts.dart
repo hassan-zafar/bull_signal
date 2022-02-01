@@ -16,7 +16,7 @@ const String logo = 'assets/images/logo.jpeg';
 AppUserModel? currentUser;
 String? uid;
 
-TextStyle titleTextStyle({double fontSize = 25, Color color = Colors.black}) {
+TextStyle titleTextStyle({double fontSize = 25, Color? color = Colors.white}) {
   return TextStyle(
       fontSize: fontSize,
       fontWeight: FontWeight.w600,
@@ -27,7 +27,7 @@ TextStyle titleTextStyle({double fontSize = 25, Color color = Colors.black}) {
 TextStyle customTextStyle(
     {FontWeight fontWeight = FontWeight.w300,
     double fontSize = 25,
-    Color color = Colors.black}) {
+    Color color = Colors.white}) {
   return TextStyle(
       fontSize: fontSize,
       fontWeight: fontWeight,

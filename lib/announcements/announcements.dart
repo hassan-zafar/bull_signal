@@ -88,46 +88,61 @@ class _AnnouncementsState extends State<Announcements> {
                   },
                   child: _isLoading
                       ? const LoadingIndicator()
-                      : Container(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment:
-                                  allAnnouncements[index].imageUrl != null
-                                      ? CrossAxisAlignment.center
-                                      : CrossAxisAlignment.start,
-                              children: [
-                                allAnnouncements[index].imageUrl != null
-                                    ? CachedNetworkImage(
-                                        imageUrl:
-                                            allAnnouncements[index].imageUrl!)
-                                    : Container(),
-                                Text(
+                      : Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Column(
+                            crossAxisAlignment:
+                                // allAnnouncements[index].imageUrl != null
+                                //     ? CrossAxisAlignment.center
+                                //     :
+                                CrossAxisAlignment.start,
+                            children: [
+                              allAnnouncements[index].imageUrl != null
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: CachedNetworkImage(
+                                          imageUrl: allAnnouncements[index]
+                                              .imageUrl!),
+                                    )
+                                  : Container(),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
                                   allAnnouncements[index].announcementTitle!,
-                                  style: customTextStyle(),
+                                  // style: customTextStyle(),
                                 ),
-                                Text(
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
                                   allAnnouncements[index].description!,
-                                  style: customTextStyle(fontSize: 18),
+                                  // style: customTextStyle(fontSize: 18),
                                 ),
-                                GestureDetector(
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: GestureDetector(
                                     onTap: () => Navigator.of(context)
                                             .push(MaterialPageRoute(
-                                          builder: (context) =>
-                                              CommentsNMessages(
+                                          builder: (context) => CommentsNChat(
                                             postId: allAnnouncements[index]
                                                 .announcementId,
-                                            androidNotificationToken:
-                                                currentUser!
-                                                    .androidNotificationToken!,
-                                            userId: currentUser!.id,
-                                            isComment: true,
+                                            isPostComment: true,
+                                            chatId: allAnnouncements[index]
+                                                .announcementId,
+                                            isAdmin: currentUser!.isAdmin,
                                             isProductComment: false,
                                           ),
                                         )),
-                                    child: const Text('View All Comments')),
-                              ],
-                            ),
+                                    child: const Text(
+                                      'View All Comments',
+                                      style: TextStyle(
+                                          color: Colors.cyan,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                              ),
+                            ],
                           ),
                         ),
                 ),
