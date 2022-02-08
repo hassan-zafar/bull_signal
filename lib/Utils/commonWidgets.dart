@@ -17,8 +17,8 @@ buildSignUpLoginButton({
     child: Container(
       width: MediaQuery.of(context).size.width * 0.9,
       //  opacity: 0.6,
-      // padding: EdgeInsets.all(8),
-      // color: color,
+      padding: const EdgeInsets.all(8),
+      color: Colors.white,
       // intensity: 0.35,
       // style: NeuomorphicStyle.Concave,
       // borderRadius: BorderRadius.circular(20),
