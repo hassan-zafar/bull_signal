@@ -14,11 +14,12 @@ buildSignUpLoginButton({
 }) {
   return Padding(
     padding: const EdgeInsets.all(8),
-    child: Container(
-      width: MediaQuery.of(context).size.width * 0.9,
+    child: Card(
       //  opacity: 0.6,
-      padding: const EdgeInsets.all(8),
-      color: Colors.white,
+      color: Colors.black,
+      margin: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.2,
+          right: MediaQuery.of(context).size.width * 0.2),
       // intensity: 0.35,
       // style: NeuomorphicStyle.Concave,
       // borderRadius: BorderRadius.circular(20),

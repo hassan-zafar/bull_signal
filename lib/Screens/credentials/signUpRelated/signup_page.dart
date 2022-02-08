@@ -114,10 +114,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           onTap: () => _handleSignUp(context),
                           child: buildSignUpLoginButton(
                               context: context,
-                              btnText: "SignUp",
+                              btnText: "Sign Up",
                               assetImage: logo,
-                              color: containerColor,
-                              hasIcon: true),
+                              // color: containerColor,
+                              hasIcon: false),
                         ),
                       ),
 
@@ -135,9 +135,9 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         bottomSheet: buildSignUpLoginText(
             context: context,
-            text1: "Don't have an account ",
-            text2: "Sign Up",
-            moveToLogIn: false),
+            text1: "Already Have an account ",
+            text2: "Sign In",
+            moveToLogIn: true),
       ),
     );
   }
