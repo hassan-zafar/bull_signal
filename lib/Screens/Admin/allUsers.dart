@@ -8,6 +8,8 @@ import 'package:bull_signal/tools/loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'commentsNChatAdmin.dart';
+
 class UserNSearch extends StatefulWidget {
   const UserNSearch({Key? key}) : super(key: key);
 
@@ -108,130 +110,106 @@ class _UserNSearchState extends State<UserNSearch>
   }
 
   buildAllUsers() {
-    return Stack(
-      children: [
-        StreamBuilder<QuerySnapshot>(
-            stream: userRef.snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const LoadingIndicator();
-              }
-              List<UserResult> userResults = [];
-              List<UserResult> allAdmins = [];
+    return StreamBuilder<QuerySnapshot>(
+        stream: userRef.snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const LoadingIndicator();
+          }
+          List<UserResult> userResults = [];
+          List<UserResult> allAdmins = [];
 
-              snapshot.data!.docs.forEach((doc) {
-                AppUserModel user = AppUserModel.fromDocument(doc);
+          snapshot.data!.docs.forEach((doc) {
+            AppUserModel user = AppUserModel.fromDocument(doc);
 
-                //remove auth user from recommended list
-                if (user.isAdmin!) {
-                  UserResult adminResult = UserResult(user);
-                  allAdmins.add(adminResult);
-                } else {
-                  UserResult userResult = UserResult(user);
-                  userResults.add(userResult);
-                }
-              });
-              return ListView(
-                physics: const BouncingScrollPhysics(),
-                children: <Widget>[
-                  // currentUser!.isAdmin!
-                  // ?
-                  SizedBox(
-                    height: 100,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
+            //remove auth user from recommended list
+            if (user.isAdmin!) {
+              UserResult adminResult = UserResult(user);
+              allAdmins.add(adminResult);
+            } else {
+              UserResult userResult = UserResult(user);
+              userResults.add(userResult);
+            }
+          });
+          return ListView(
+            physics: const BouncingScrollPhysics(),
+            children: <Widget>[
+              // currentUser!.isAdmin!
+              // ?
+              SizedBox(
+                height: 100,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      typeSelected = "users";
-                                    });
-                                  },
-                                  child: Card(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "All Users ${userResults.length}",
-                                        style: const TextStyle(fontSize: 20.0),
-                                      ),
-                                    ),
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  typeSelected = "users";
+                                });
+                              },
+                              child: Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "All Users ${userResults.length}",
+                                    style: const TextStyle(fontSize: 20.0),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      typeSelected = "admin";
-                                    });
-                                  },
-                                  child: Card(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "All Admins ${allAdmins.length}",
-                                        style: const TextStyle(fontSize: 20.0),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ],
                       ),
-                    ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  typeSelected = "admin";
+                                });
+                              },
+                              child: Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "All Admins ${allAdmins.length}",
+                                    style: const TextStyle(fontSize: 20.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  // : Container(),
-                  typeSelected == 'admin'
-                      ? Column(
-                          children: allAdmins,
-                        )
-                      : const Text(""),
-                  typeSelected == 'users'
-                      ? Column(
-                          children: userResults,
-                        )
-                      : const Text(''),
-                ],
-              );
-            }),
-        Positioned(
-            left: 20,
-            bottom: 20,
-            child: GestureDetector(
-              onTap: () {
-                AuthenticationService().signOut();
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => LoginPage(),
-                ));
-              },
-              child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.red,
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("LogOut"),
-                  )),
-            ))
-      ],
-    );
+                ),
+              ),
+              // : Container(),
+              typeSelected == 'admin'
+                  ? Column(
+                      children: allAdmins,
+                    )
+                  : const Text(""),
+              typeSelected == 'users'
+                  ? Column(
+                      children: userResults,
+                    )
+                  : const Text(''),
+            ],
+          );
+        });
   }
 }
 
@@ -247,7 +225,7 @@ class UserResult extends StatelessWidget {
           onTap: () {
             if (user.id != currentUser!.id) {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => CommentsNChat(
+                builder: (context) => CommentsNChatAdmin(
                     chatId: user.id,
                     chatNotificationToken: user.androidNotificationToken),
               ));

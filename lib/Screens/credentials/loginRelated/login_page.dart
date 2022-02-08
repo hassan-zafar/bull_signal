@@ -125,16 +125,16 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 220, top: 8, bottom: 8, right: 12),
+                            left: 200, top: 8, bottom: 8, right: 12),
                         child: GestureDetector(
                           onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
                                       const ForgetPasswordPage())),
-                          child: Container(
-                            color: Colors.black,
-                            child: const Padding(
+                          child: const Card(
+                            color: Colors.black26,
+                            child: Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Hero(
                                 tag: "passFor",
@@ -209,6 +209,7 @@ class _LoginPageState extends State<LoginPage> {
         });
         return null;
       });
+      print(userId);
       await DatabaseMethods()
           .fetchUserInfoFromFirebase(uid: userId!)
           .then((value) => setState(() {
