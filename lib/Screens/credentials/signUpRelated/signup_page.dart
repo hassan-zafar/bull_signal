@@ -102,7 +102,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         controller: _phoneNoController,
                         isPass: false,
                         valText: 'Phone number Too Short',
-                        lablelText: "Phone NUmber",
+                        lablelText: "Phone Number",
                       ),
                       const SizedBox(
                         height: 10,
@@ -199,9 +199,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         _obscureText ? Icons.visibility : Icons.visibility_off),
                   )
                 : null,
-            border: InputBorder.none,
             // filled: true,
-            //  fillColor: Colors.white,
+            // fillColor: Colors.white,
             labelText: lablelText,
             hintText: hintText,
           ),

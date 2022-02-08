@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                           // onSaved: (val) => phoneNo = val,
                           autofocus: true,
                           decoration: const InputDecoration(
-                            border: InputBorder.none,
+                            // border: InputBorder.none,
                             labelText: "E-mail",
                             labelStyle: TextStyle(fontSize: 15.0),
                             hintText: "Please enter your valid E-mail",
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ? Icons.visibility
                                   : Icons.visibility_off),
                             ),
-                            border: InputBorder.none,
+                            // border: InputBorder.none,
                             // filled: true,
                             //  fillColor: Colors.white,
                             labelText: "Password",
@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                             context: context,
                             btnText: "Log In",
                             assetImage: logo,
-                            color: containerColor,
+                            // color: containerColor,
                             hasIcon: false,
                           ),
                         ),
